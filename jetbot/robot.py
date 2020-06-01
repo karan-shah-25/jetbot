@@ -7,42 +7,62 @@ from .motor import Motor
 
 class Robot(SingletonConfigurable):
     
-    left_motor = traitlets.Instance(Motor)
-    right_motor = traitlets.Instance(Motor)
+    left_motor1 = traitlets.Instance(Motor)
+    left_motor2 = traitlets.Instance(Motor)	
+    right_motor1 = traitlets.Instance(Motor)
+    right_motor2 = traitlets.Instance(Motor)
 
     # config
     i2c_bus = traitlets.Integer(default_value=1).tag(config=True)
-    left_motor_channel = traitlets.Integer(default_value=1).tag(config=True)
-    left_motor_alpha = traitlets.Float(default_value=1.0).tag(config=True)
-    right_motor_channel = traitlets.Integer(default_value=2).tag(config=True)
-    right_motor_alpha = traitlets.Float(default_value=1.0).tag(config=True)
+    left_motor1_channel = traitlets.Integer(default_value=1).tag(config=True)
+    left_motor1_alpha = traitlets.Float(default_value=1.0).tag(config=True)
+    left_motor2_channel = traitlets.Integer(default_value=3).tag(config=True)
+    left_motor2_alpha = traitlets.Float(default_value=1.0).tag(config=True)
+    right_motor1_channel = traitlets.Integer(default_value=2).tag(config=True)
+    right_motor1_alpha = traitlets.Float(default_value=1.0).tag(config=True)
+    right_motor2_channel = traitlets.Integer(default_value=4).tag(config=True)
+    right_motor2_alpha = traitlets.Float(default_value=1.0).tag(config=True)
     
     def __init__(self, *args, **kwargs):
         super(Robot, self).__init__(*args, **kwargs)
         self.motor_driver = Adafruit_MotorHAT(i2c_bus=self.i2c_bus)
-        self.left_motor = Motor(self.motor_driver, channel=self.left_motor_channel, alpha=self.left_motor_alpha)
-        self.right_motor = Motor(self.motor_driver, channel=self.right_motor_channel, alpha=self.right_motor_alpha)
+        self.left_motor1 = Motor(self.motor_driver, channel=self.left_motor1_channel, alpha=self.left_motor1_alpha)
+        self.left_motor2 = Motor(self.motor_driver, channel=self.left_motor2_channel, alpha=self.left_motor2_alpha)
+        self.right_motor1 = Motor(self.motor_driver, channel=self.right_motor1_channel, alpha=self.right_motor1_alpha)
+        self.right_motor2 = Motor(self.motor_driver, channel=self.right_motor2_channel, alpha=self.left_motor2_alpha)
         
     def set_motors(self, left_speed, right_speed):
-        self.left_motor.value = left_speed
-        self.right_motor.value = right_speed
+        self.left_motor1.value = left_speed
+        self.left_motor2.value = left_speed
+        self.right_motor1.value = right_speed
+        self.right_motor2.value = right_speed
         
     def forward(self, speed=1.0, duration=None):
-        self.left_motor.value = speed
-        self.right_motor.value = speed
+        self.left_motor1.value = speed
+        self.left_motor2.value = speed
+        self.right_motor1.value = speed
+        self.right_motor2.value = speed
 
     def backward(self, speed=1.0):
-        self.left_motor.value = -speed
-        self.right_motor.value = -speed
+        self.left_motor1.value = -speed
+        self.left_motor2.value = -speed
+        self.right_motor1.value = -speed
+        self.right_motor2.value = -speed
 
     def left(self, speed=1.0):
-        self.left_motor.value = -speed
-        self.right_motor.value = speed
+        self.left_motor1.value = -speed
+	self.left_motor2.value = -speed
+        self.right_motor1.value = speed
+	self.right_motor2.value = speed
 
     def right(self, speed=1.0):
-        self.left_motor.value = speed
-        self.right_motor.value = -speed
+        self.left_motor1.value = speed
+	self.left_motor2.value = speed
+        self.right_motor1.value = -speed
+	self.right_motor2.value = -speed
 
     def stop(self):
-        self.left_motor.value = 0
-        self.right_motor.value = 0
+        self.left_motor1.value = 0
+	self.left_motor2.value = 0
+        self.right_motor1.value = 0
+	self.right_motor2.value = 0
