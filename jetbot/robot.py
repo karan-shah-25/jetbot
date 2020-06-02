@@ -51,18 +51,18 @@ class Robot(SingletonConfigurable):
 
     def left(self, speed=1.0):
         self.left_motor1.value = -speed
-	self.left_motor2.value = -speed
+        self.left_motor2.value = -speed
         self.right_motor1.value = speed
-	self.right_motor2.value = speed
+        self.right_motor2.value = speed
 
     def right(self, speed=1.0):
         self.left_motor1.value = speed
-	self.left_motor2.value = speed
+        self.left_motor2.value = speed
         self.right_motor1.value = -speed
-	self.right_motor2.value = -speed
+        self.right_motor2.value = -speed
 
     def stop(self):
         self.left_motor1.value = 0
-	self.left_motor2.value = 0
+        self.left_motor2.value = 0
         self.right_motor1.value = 0
-	self.right_motor2.value = 0
+        self.right_motor2.value = 0
